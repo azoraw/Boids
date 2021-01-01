@@ -13,6 +13,8 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.animation.Config.CIRCLE_RADIUS;
+
 public class MyGdxGame extends ApplicationAdapter {
     ShapeRenderer shapeRenderer;
     Boids boids;
@@ -30,16 +32,11 @@ public class MyGdxGame extends ApplicationAdapter {
 
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
         for (Bird bird : boids.getBirds()) {
-            shapeRenderer.circle(bird.getPosition().getX(), bird.getPosition().getY(), 10);
+            shapeRenderer.circle(bird.getPosition().getX(), bird.getPosition().getY(), CIRCLE_RADIUS);
         }
 
 
         shapeRenderer.end();
         boids.move();
-    }
-
-
-    @Override
-    public void dispose() {
     }
 }

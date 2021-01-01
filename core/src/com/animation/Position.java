@@ -7,7 +7,7 @@ import lombok.Getter;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.animation.Config.COLLIDING_FORCE;
+import static com.animation.Config.*;
 
 @Getter
 class Position {
@@ -47,17 +47,17 @@ class Position {
 
     private void alignWithOthers(List<Motion> neighboursDirections) {
         for (Motion neighbourDirection : neighboursDirections) {
-            if(neighbourDirection.getDx() > currentMotion.getDx()) {
-                tmpDX++;
+            if (neighbourDirection.getDx() > currentMotion.getDx()) {
+                tmpDX += ALIGNMENT_FORCE;
             }
-            if(neighbourDirection.getDx() < currentMotion.getDx()) {
-                tmpDX--;
+            if (neighbourDirection.getDx() < currentMotion.getDx()) {
+                tmpDX -= ALIGNMENT_FORCE;
             }
-            if(neighbourDirection.getDy() > currentMotion.getDy()) {
-                tmpDY++;
+            if (neighbourDirection.getDy() > currentMotion.getDy()) {
+                tmpDY += ALIGNMENT_FORCE;
             }
-            if(neighbourDirection.getDy() < currentMotion.getDy()) {
-                tmpDY--;
+            if (neighbourDirection.getDy() < currentMotion.getDy()) {
+                tmpDY -= ALIGNMENT_FORCE;
             }
         }
 
@@ -66,33 +66,33 @@ class Position {
     private void goTowardsCenterOfMass(List<Position> positions) {
         for (Position position : positions) {
             if (position.getX() - x > 0) {
-                tmpDX++;
+                tmpDX += COHESION_FORCE;
             }
             if (position.getX() - x < 0) {
-                tmpDX--;
+                tmpDX -= COHESION_FORCE;
             }
             if (position.getY() - y > 0) {
-                tmpDY++;
+                tmpDY += COHESION_FORCE;
             }
             if (position.getY() - y < 0) {
-                tmpDY--;
+                tmpDY -= COHESION_FORCE;
             }
         }
     }
 
     private void doNotCollide(List<Position> positions) {
         for (Position position : positions) {
-            if (Math.abs(position.getX() - x) < 50) {
+            if (Math.abs(position.getX() - x) < COLLIDING_RADIUS) {
                 if (position.getX() - x > 0)
-                    tmpDX-=COLLIDING_FORCE;
+                    tmpDX -= COLLISION_REPULSION_FORCE;
                 if (position.getX() - x < 0)
-                    tmpDX+=COLLIDING_FORCE;
+                    tmpDX += COLLISION_REPULSION_FORCE;
             }
-            if (Math.abs(position.getY() - y) < 50) {
+            if (Math.abs(position.getY() - y) < COLLIDING_RADIUS) {
                 if (position.getY() - y > 0)
-                    tmpDY-=COLLIDING_FORCE;
+                    tmpDY -= COLLISION_REPULSION_FORCE;
                 if (position.getY() - y < 0)
-                    tmpDY+=COLLIDING_FORCE;
+                    tmpDY += COLLISION_REPULSION_FORCE;
             }
         }
     }

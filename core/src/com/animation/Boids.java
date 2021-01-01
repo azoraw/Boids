@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.animation.Config.NUMBER_OF_BOIDS;
+
 @Getter
 public class Boids {
     private final List<Bird> birds = new ArrayList<>();
@@ -20,7 +22,7 @@ public class Boids {
     }
 
     public Boids() {
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < NUMBER_OF_BOIDS; i++) {
             birds.add(new Bird());
         }
     }
