@@ -21,7 +21,7 @@ public class MyGdxGame extends ApplicationAdapter {
     public void create() {
         boids = new Boids();
         shapeRenderer = new ShapeRenderer();
-        shapeRenderer.setColor(Color.RED);
+        shapeRenderer.setColor(Color.WHITE);
     }
 
     @Override
@@ -31,10 +31,6 @@ public class MyGdxGame extends ApplicationAdapter {
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
         for (Bird bird : boids.getBirds()) {
             shapeRenderer.circle(bird.getPosition().getX(), bird.getPosition().getY(), 10);
-        }
-        Bird exampleBird = boids.getBirds().get(0);
-        for (Bird neighbour : exampleBird.getNeighbours()) {
-            shapeRenderer.line(neighbour.getPosition().getX(), neighbour.getPosition().getY(), exampleBird.getPosition().getX(), exampleBird.getPosition().getY());
         }
 
 

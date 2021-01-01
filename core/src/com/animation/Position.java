@@ -12,7 +12,7 @@ class Position {
 
     private int x;
     private int y;
-    private final Motion motion;
+    private final Motion currentMotion;
     private int tmpDX;
     private int tmpDY;
 
@@ -20,25 +20,23 @@ class Position {
     public Position() {
         x = RandomGen.getRandom(Gdx.graphics.getWidth());
         y = RandomGen.getRandom(Gdx.graphics.getHeight());
-        motion = new Motion();
+        currentMotion = new Motion();
     }
 
     void move(List<Bird> neighbours) {
         List<Position> neighboursPosition = neighbours.stream()
                 .map(Bird::getPosition)
                 .collect(Collectors.toList());
-        tmpDX = motion.getDx();
-        tmpDY = motion.getDy();
+        tmpDX = currentMotion.getDx();
+        tmpDY = currentMotion.getDy();
 
-        //goAwayFromEdges();
         goTowardsCenterOfMass(neighboursPosition);
         doNotCollide(neighboursPosition);
         teleportToOtherSide();
 
-        x += tmpDX;
-        y += tmpDY;
-        motion.setNewMotion(tmpDX,tmpDY);
-
+        currentMotion.setNewMotion(tmpDX,tmpDY);
+        x += currentMotion.getDx();
+        y += currentMotion.getDy();
     }
 
     private void goTowardsCenterOfMass(List<Position> positions) {
