@@ -1,6 +1,5 @@
 package com.animation;
 
-import com.animation.util.Direction;
 import lombok.Getter;
 import lombok.Setter;
 

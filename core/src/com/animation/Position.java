@@ -1,6 +1,6 @@
 package com.animation;
 
-import com.animation.util.Direction;
+import com.animation.util.Motion;
 import com.animation.util.RandomGen;
 import com.badlogic.gdx.Gdx;
 import lombok.AccessLevel;
@@ -27,42 +27,12 @@ class Position {
         );
     }
 
-    void move(Direction direction) {
-        switch (direction) {
-            case UPPER_LEFT:
-                x -= STEP_SIZE;
-                y += STEP_SIZE;
-                break;
-            case UP:
-                y += STEP_SIZE;
-                break;
-            case UPPER_RIGHT:
-                x += STEP_SIZE;
-                y += STEP_SIZE;
-                break;
-            case LEFT:
-                x -= STEP_SIZE;
-                break;
-            case RIGHT:
-                x += STEP_SIZE;
-                break;
-            case DOWN_LEFT:
-                x -= STEP_SIZE;
-                y -= STEP_SIZE;
-                break;
-            case DOWN:
-                y -= STEP_SIZE;
-                break;
-            case DOWN_RIGHT:
-                x += STEP_SIZE;
-                y -= STEP_SIZE;
-                break;
-        }
-    }
-
     void moveRandomly() {
-        move(Direction.getRandomDirection());
+        Motion motion = new Motion();
+        x+=motion.getDx();
+        y+=motion.getDy();
         goAwayFromEdges();
+        teleportToOtherSide();
     }
 
     void goTowardsCenterOfMass(List<Position> positions) {

@@ -9,4 +9,7 @@ public class RandomGen {
     public static int getRandom(int max) {
         return random.nextInt(max);
     }
+    public static boolean nextBoolean() {
+        return random.nextBoolean();
+    }
 }
