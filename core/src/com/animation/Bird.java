@@ -10,16 +10,16 @@ import java.util.stream.Collectors;
 @Getter
 class Bird {
 
-    private final Position position = Position.randomPosition();
+    private final Position position = new Position();
 
     @Setter
     private List<Bird> neighbours = new ArrayList<>();
 
     void move() {
         position.moveRandomly();
-        List<Position> collect = neighbours.stream().map(Bird::getPosition).collect(Collectors.toList());
-        position.goTowardsCenterOfMass(collect);
-        position.doNotCollide(collect);
+        List<Position> neighboursPositions = neighbours.stream().map(Bird::getPosition).collect(Collectors.toList());
+        position.goTowardsCenterOfMass(neighboursPositions);
+        position.doNotCollide(neighboursPositions);
     }
 
 

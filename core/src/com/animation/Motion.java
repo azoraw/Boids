@@ -1,5 +1,6 @@
-package com.animation.util;
+package com.animation;
 
+import com.animation.util.RandomGen;
 import lombok.Getter;
 
 @Getter

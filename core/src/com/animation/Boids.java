@@ -20,7 +20,7 @@ public class Boids {
     }
 
     public Boids() {
-        for (int i = 0; i < 1; i++) {
+        for (int i = 0; i < 30; i++) {
             birds.add(new Bird());
         }
     }

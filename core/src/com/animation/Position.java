@@ -1,36 +1,28 @@
 package com.animation;
 
-import com.animation.util.Motion;
 import com.animation.util.RandomGen;
 import com.badlogic.gdx.Gdx;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 import java.util.List;
 
-import static com.animation.Config.*;
-
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
 class Position {
 
     private int x;
     private int y;
+    private Motion motion;
 
-    static Position randomPosition() {
-        return new Position(
-                RandomGen.getRandom(Gdx.graphics.getWidth()),
-                RandomGen.getRandom(Gdx.graphics.getHeight())
-        );
+
+    public Position() {
+        x = RandomGen.getRandom(Gdx.graphics.getWidth());
+        y = RandomGen.getRandom(Gdx.graphics.getHeight());
+        motion = new Motion();
     }
 
     void moveRandomly() {
-        Motion motion = new Motion();
-        x+=motion.getDx();
-        y+=motion.getDy();
+        x += motion.getDx();
+        y += motion.getDy();
         goAwayFromEdges();
         teleportToOtherSide();
     }
@@ -60,7 +52,7 @@ class Position {
                 if (position.getX() - x < 0)
                     x++;
             }
-            if (Math.abs(position.getY() - y) < 30) {
+            if (Math.abs(position.getY() - y) < 50) {
                 if (position.getY() - y > 0)
                     y--;
                 if (position.getY() - y < 0)
