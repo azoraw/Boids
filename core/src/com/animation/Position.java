@@ -5,13 +5,16 @@ import com.badlogic.gdx.Gdx;
 import lombok.Getter;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 class Position {
 
     private int x;
     private int y;
-    private Motion motion;
+    private final Motion motion;
+    private int tmpDX;
+    private int tmpDY;
 
 
     public Position() {
@@ -20,43 +23,54 @@ class Position {
         motion = new Motion();
     }
 
-    void moveRandomly() {
-        x += motion.getDx();
-        y += motion.getDy();
-        goAwayFromEdges();
+    void move(List<Bird> neighbours) {
+        List<Position> neighboursPosition = neighbours.stream()
+                .map(Bird::getPosition)
+                .collect(Collectors.toList());
+        tmpDX = motion.getDx();
+        tmpDY = motion.getDy();
+
+        //goAwayFromEdges();
+        goTowardsCenterOfMass(neighboursPosition);
+        doNotCollide(neighboursPosition);
         teleportToOtherSide();
+
+        x += tmpDX;
+        y += tmpDY;
+        motion.setNewMotion(tmpDX,tmpDY);
+
     }
 
-    void goTowardsCenterOfMass(List<Position> positions) {
+    private void goTowardsCenterOfMass(List<Position> positions) {
         for (Position position : positions) {
             if (position.getX() - x > 0) {
-                x++;
+                tmpDX++;
             }
             if (position.getX() - x < 0) {
-                x--;
+                tmpDX--;
             }
             if (position.getY() - y > 0) {
-                y++;
+                tmpDY++;
             }
             if (position.getY() - y < 0) {
-                y--;
+                tmpDY--;
             }
         }
     }
 
-    void doNotCollide(List<Position> positions) {
+    private void doNotCollide(List<Position> positions) {
         for (Position position : positions) {
             if (Math.abs(position.getX() - x) < 50) {
                 if (position.getX() - x > 0)
-                    x--;
+                    tmpDX--;
                 if (position.getX() - x < 0)
-                    x++;
+                    tmpDX++;
             }
             if (Math.abs(position.getY() - y) < 50) {
                 if (position.getY() - y > 0)
-                    y--;
+                    tmpDY--;
                 if (position.getY() - y < 0)
-                    y++;
+                    tmpDY++;
             }
         }
     }

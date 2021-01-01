@@ -6,7 +6,8 @@ import lombok.Getter;
 @Getter
 public class Motion {
 
-    private int speed = 10;
+    private final int speed = 1;
+
     private int dx;
     private int dy;
 
@@ -19,5 +20,9 @@ public class Motion {
         dy = (int) Math.sqrt(Math.pow(speed, 2) - Math.pow(dx, 2)) * ( RandomGen.nextBoolean() ? 1 : -1 );
     }
 
+    void setNewMotion(int newDX, int newDY) {
+        dx = newDX;
+        dy = newDY;
+    }
 
 }

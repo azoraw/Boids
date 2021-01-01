@@ -16,10 +16,7 @@ class Bird {
     private List<Bird> neighbours = new ArrayList<>();
 
     void move() {
-        position.moveRandomly();
-        List<Position> neighboursPositions = neighbours.stream().map(Bird::getPosition).collect(Collectors.toList());
-        position.goTowardsCenterOfMass(neighboursPositions);
-        position.doNotCollide(neighboursPositions);
+        position.move(neighbours);
     }
 
 
