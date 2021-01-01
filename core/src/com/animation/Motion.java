@@ -6,7 +6,7 @@ import lombok.Getter;
 @Getter
 public class Motion {
 
-    private int speed = 5;
+    private int speed = 10;
     private int dx;
     private int dy;
 
