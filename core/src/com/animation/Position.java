@@ -7,6 +7,8 @@ import lombok.Getter;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.animation.Config.COLLIDING_FORCE;
+
 @Getter
 class Position {
 
@@ -32,11 +34,33 @@ class Position {
 
         goTowardsCenterOfMass(neighboursPosition);
         doNotCollide(neighboursPosition);
+        alignWithOthers(neighboursPosition.stream()
+                .map(Position::getCurrentMotion)
+                .collect(Collectors.toList()));
+
         teleportToOtherSide();
 
-        currentMotion.setNewMotion(tmpDX,tmpDY);
+        currentMotion.setNewMotion(tmpDX, tmpDY);
         x += currentMotion.getDx();
         y += currentMotion.getDy();
+    }
+
+    private void alignWithOthers(List<Motion> neighboursDirections) {
+        for (Motion neighbourDirection : neighboursDirections) {
+            if(neighbourDirection.getDx() > currentMotion.getDx()) {
+                tmpDX++;
+            }
+            if(neighbourDirection.getDx() < currentMotion.getDx()) {
+                tmpDX--;
+            }
+            if(neighbourDirection.getDy() > currentMotion.getDy()) {
+                tmpDY++;
+            }
+            if(neighbourDirection.getDy() < currentMotion.getDy()) {
+                tmpDY--;
+            }
+        }
+
     }
 
     private void goTowardsCenterOfMass(List<Position> positions) {
@@ -60,15 +84,15 @@ class Position {
         for (Position position : positions) {
             if (Math.abs(position.getX() - x) < 50) {
                 if (position.getX() - x > 0)
-                    tmpDX--;
+                    tmpDX-=COLLIDING_FORCE;
                 if (position.getX() - x < 0)
-                    tmpDX++;
+                    tmpDX+=COLLIDING_FORCE;
             }
             if (Math.abs(position.getY() - y) < 50) {
                 if (position.getY() - y > 0)
-                    tmpDY--;
+                    tmpDY-=COLLIDING_FORCE;
                 if (position.getY() - y < 0)
-                    tmpDY++;
+                    tmpDY+=COLLIDING_FORCE;
             }
         }
     }

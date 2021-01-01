@@ -7,7 +7,7 @@ import lombok.Getter;
 public class Motion {
 
     private static final int maxSpeed = 15;
-    private final int speed = 10;
+    private static final int speed = 5;
 
     private int dx;
     private int dy;
