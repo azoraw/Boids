@@ -7,22 +7,24 @@ import lombok.Getter;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.animation.Config.*;
-
 @Getter
 class Position {
 
+    private final Motion currentMotion;
+    private final BoidsSettings boidsSettings;
+
     private int x;
     private int y;
-    private final Motion currentMotion;
     private int tmpDX;
     private int tmpDY;
 
 
-    public Position() {
+    public Position(BoidsSettings boidsSettings) {
+        this.boidsSettings = boidsSettings;
+
         x = RandomGen.getRandom(Gdx.graphics.getWidth());
         y = RandomGen.getRandom(Gdx.graphics.getHeight());
-        currentMotion = new Motion();
+        currentMotion = new Motion(boidsSettings);
     }
 
     void move(List<Bird> neighbours) {
@@ -48,16 +50,16 @@ class Position {
     private void alignWithOthers(List<Motion> neighboursDirections) {
         for (Motion neighbourDirection : neighboursDirections) {
             if (neighbourDirection.getDx() > currentMotion.getDx()) {
-                tmpDX += ALIGNMENT_FORCE;
+                tmpDX += boidsSettings.getAlignmentForce();
             }
             if (neighbourDirection.getDx() < currentMotion.getDx()) {
-                tmpDX -= ALIGNMENT_FORCE;
+                tmpDX -= boidsSettings.getAlignmentForce();
             }
             if (neighbourDirection.getDy() > currentMotion.getDy()) {
-                tmpDY += ALIGNMENT_FORCE;
+                tmpDY += boidsSettings.getAlignmentForce();
             }
             if (neighbourDirection.getDy() < currentMotion.getDy()) {
-                tmpDY -= ALIGNMENT_FORCE;
+                tmpDY -= boidsSettings.getAlignmentForce();
             }
         }
 
@@ -66,33 +68,33 @@ class Position {
     private void goTowardsCenterOfMass(List<Position> positions) {
         for (Position position : positions) {
             if (position.getX() - x > 0) {
-                tmpDX += COHESION_FORCE;
+                tmpDX += boidsSettings.getCohesionForce();
             }
             if (position.getX() - x < 0) {
-                tmpDX -= COHESION_FORCE;
+                tmpDX -=  boidsSettings.getCohesionForce();
             }
             if (position.getY() - y > 0) {
-                tmpDY += COHESION_FORCE;
+                tmpDY +=  boidsSettings.getCohesionForce();
             }
             if (position.getY() - y < 0) {
-                tmpDY -= COHESION_FORCE;
+                tmpDY -=  boidsSettings.getCohesionForce();
             }
         }
     }
 
     private void doNotCollide(List<Position> positions) {
         for (Position position : positions) {
-            if (Math.abs(position.getX() - x) < COLLIDING_RADIUS) {
+            if (Math.abs(position.getX() - x) < boidsSettings.getCollidingRadius()) {
                 if (position.getX() - x > 0)
-                    tmpDX -= COLLISION_REPULSION_FORCE;
+                    tmpDX -= boidsSettings.getCollisionRepulsionForce();
                 if (position.getX() - x < 0)
-                    tmpDX += COLLISION_REPULSION_FORCE;
+                    tmpDX += boidsSettings.getCollisionRepulsionForce();
             }
-            if (Math.abs(position.getY() - y) < COLLIDING_RADIUS) {
+            if (Math.abs(position.getY() - y) < boidsSettings.getCollidingRadius()) {
                 if (position.getY() - y > 0)
-                    tmpDY -= COLLISION_REPULSION_FORCE;
+                    tmpDY -= boidsSettings.getCollisionRepulsionForce();
                 if (position.getY() - y < 0)
-                    tmpDY += COLLISION_REPULSION_FORCE;
+                    tmpDY += boidsSettings.getCollisionRepulsionForce();
             }
         }
     }

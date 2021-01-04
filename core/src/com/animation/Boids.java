@@ -6,11 +6,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.animation.Config.NUMBER_OF_BOIDS;
-
 @Getter
 public class Boids {
     private final List<Bird> birds = new ArrayList<>();
+    private final BoidsSettings boidsSettings;
 
     void whoIsNeighbour() {
         birds.forEach(
@@ -21,9 +20,11 @@ public class Boids {
         );
     }
 
-    public Boids() {
-        for (int i = 0; i < NUMBER_OF_BOIDS; i++) {
-            birds.add(new Bird());
+    public Boids(BoidsSettings boidsSettings) {
+        this.boidsSettings = boidsSettings;
+
+        for (int i = 0; i < boidsSettings.getNumberOfBoids(); i++) {
+            birds.add(new Bird(boidsSettings));
         }
     }
 
@@ -32,5 +33,9 @@ public class Boids {
         for (Bird bird : birds) {
             bird.move();
         }
+    }
+
+    public boolean shouldRestart() {
+        return birds.size() != boidsSettings.getNumberOfBoids();
     }
 }

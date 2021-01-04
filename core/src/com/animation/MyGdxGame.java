@@ -2,40 +2,33 @@ package com.animation;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import static com.animation.Config.CIRCLE_RADIUS;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 
 public class MyGdxGame extends ApplicationAdapter {
-    ShapeRenderer shapeRenderer;
-    Boids boids;
+    private Stage stage;
 
-    @Override
-    public void create() {
-        boids = new Boids();
-        shapeRenderer = new ShapeRenderer();
-        shapeRenderer.setColor(Color.WHITE);
+    public void create () {
+        stage = new Stage();
+        Gdx.input.setInputProcessor(stage);
+
+        BoidsSettings boidsSettings = new BoidsSettings();
+
+        stage.addActor(new GameActor(boidsSettings));
+        stage.addActor(new SettingsTable(boidsSettings));
     }
 
-    @Override
-    public void render() {
+    public void resize (int width, int height) {
+        stage.getViewport().update(width, height, true);
+    }
+
+    public void render () {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        stage.act(Gdx.graphics.getDeltaTime());
+        stage.draw();
+    }
 
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-        for (Bird bird : boids.getBirds()) {
-            shapeRenderer.circle(bird.getPosition().getX(), bird.getPosition().getY(), CIRCLE_RADIUS);
-        }
-
-        shapeRenderer.end();
-        boids.move();
+    public void dispose() {
+        stage.dispose();
     }
 }
