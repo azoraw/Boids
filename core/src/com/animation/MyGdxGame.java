@@ -35,7 +35,6 @@ public class MyGdxGame extends ApplicationAdapter {
             shapeRenderer.circle(bird.getPosition().getX(), bird.getPosition().getY(), CIRCLE_RADIUS);
         }
 
-
         shapeRenderer.end();
         boids.move();
     }
