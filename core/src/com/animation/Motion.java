@@ -27,9 +27,10 @@ public class Motion {
     }
 
     private void limitSpeed() {
-        if (Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2)) > boidsSettings.getMaxSpeed()) {
-            dx /= 2;
-            dy /= 2;
+        double z = Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2));
+        if (z > boidsSettings.getMaxSpeed()) {
+            dx = (int) (dx * boidsSettings.getMaxSpeed() / z);
+            dy = (int) (dy * boidsSettings.getMaxSpeed() / z);
         }
     }
 
