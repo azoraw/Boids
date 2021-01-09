@@ -5,20 +5,20 @@ import lombok.Getter;
 @Getter
 public class BoidsSettings {
 
-    private int numberOfBoids = 1000;
+    private int numberOfBoids = 100;
 
-    private int maxSpeed = 15;
-    private int initSpeed = 5;
+    private int maxSpeed = 10;
+    private int initSpeed = 10;
 
-    private int alignmentForce = 1;
-    private int cohesionForce = 1;
+    private double alignmentForce = 1;
+    private double cohesionForce = 1;
 
-    private int collisionRepulsionForce = 2;
+    private double collisionRepulsionForce = 4;
     private int collidingRadius = 50;
 
     private int neighbourRadius = 100;
 
-    private int circleRadius = 10;
+    private int circleRadius = 5;
 
     public void setNumberOfBoids(String numberOfBoidsString) {
         try {
@@ -43,21 +43,21 @@ public class BoidsSettings {
 
     public void setAlignmentForce(String alignmentForceString) {
         try {
-            alignmentForce = Integer.parseInt(alignmentForceString);
+            alignmentForce = Double.parseDouble(alignmentForceString);
         } catch (NumberFormatException ignored) {
         }
     }
 
     public void setCohesionForce(String cohesionForceString) {
         try {
-            cohesionForce = Integer.parseInt(cohesionForceString);
+            cohesionForce =  Double.parseDouble(cohesionForceString);
         } catch (NumberFormatException ignored) {
         }
     }
 
     public void setCollisionRepulsionForce(String collisionRepulsionForceString) {
         try {
-            collisionRepulsionForce = Integer.parseInt(collisionRepulsionForceString);
+            collisionRepulsionForce =  Double.parseDouble(collisionRepulsionForceString);
         } catch (NumberFormatException ignored) {
         }
     }

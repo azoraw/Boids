@@ -7,8 +7,8 @@ import lombok.Getter;
 public class Motion {
 
     private final BoidsSettings boidsSettings;
-    private int dx;
-    private int dy;
+    private double dx;
+    private double dy;
 
     public Motion(BoidsSettings boidsSettings) {
         this.boidsSettings = boidsSettings;
@@ -17,10 +17,10 @@ public class Motion {
 
     private void randomDirection() {
         dx = RandomGen.getRandom(2 * boidsSettings.getInitSpeed() + 1) - boidsSettings.getInitSpeed();
-        dy = (int) Math.sqrt(Math.pow(boidsSettings.getInitSpeed(), 2) - Math.pow(dx, 2)) * (RandomGen.nextBoolean() ? 1 : -1);
+        dy = Math.sqrt(Math.pow(boidsSettings.getInitSpeed(), 2) - Math.pow(dx, 2)) * (RandomGen.nextBoolean() ? 1 : -1);
     }
 
-    void setNewMotion(int newDX, int newDY) {
+    void setNewMotion(double newDX, double newDY) {
         dx = newDX;
         dy = newDY;
         limitSpeed();

@@ -26,7 +26,7 @@ public class GameActor extends Actor {
         }
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
         for (Bird bird : boids.getBirds()) {
-            shapeRenderer.circle(bird.getPosition().getX(), bird.getPosition().getY(), boidsSettings.getCircleRadius());
+            shapeRenderer.circle((int) bird.getPosition().getX(), (int) bird.getPosition().getY(), boidsSettings.getCircleRadius());
         }
         shapeRenderer.end();
         boids.move();

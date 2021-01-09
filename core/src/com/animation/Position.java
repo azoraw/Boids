@@ -13,10 +13,10 @@ class Position {
     private final Motion currentMotion;
     private final BoidsSettings boidsSettings;
 
-    private int x;
-    private int y;
-    private int tmpDX;
-    private int tmpDY;
+    private double x;
+    private double y;
+    private double tmpDX;
+    private double tmpDY;
 
 
     public Position(BoidsSettings boidsSettings) {
@@ -31,8 +31,8 @@ class Position {
         List<Position> neighboursPosition = neighbours.stream()
                 .map(Bird::getPosition)
                 .collect(Collectors.toList());
-        tmpDX = currentMotion.getDx();
-        tmpDY = currentMotion.getDy();
+        tmpDX = (int) currentMotion.getDx();
+        tmpDY = (int) currentMotion.getDy();
 
         goTowardsCenterOfMass(neighboursPosition);
         doNotCollide(neighboursPosition);
@@ -71,13 +71,13 @@ class Position {
                 tmpDX += boidsSettings.getCohesionForce();
             }
             if (position.getX() - x < 0) {
-                tmpDX -=  boidsSettings.getCohesionForce();
+                tmpDX -= boidsSettings.getCohesionForce();
             }
             if (position.getY() - y > 0) {
-                tmpDY +=  boidsSettings.getCohesionForce();
+                tmpDY += boidsSettings.getCohesionForce();
             }
             if (position.getY() - y < 0) {
-                tmpDY -=  boidsSettings.getCohesionForce();
+                tmpDY -= boidsSettings.getCohesionForce();
             }
         }
     }

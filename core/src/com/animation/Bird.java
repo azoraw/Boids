@@ -26,10 +26,10 @@ class Bird {
 
 
     public boolean isNeighbour(Position possibleNeighbourPosition) {
-        int x1 = position.getX();
-        int x2 = possibleNeighbourPosition.getX();
-        int y1 = position.getY();
-        int y2 = possibleNeighbourPosition.getY();
+        double x1 = position.getX();
+        double x2 = possibleNeighbourPosition.getX();
+        double y1 = position.getY();
+        double y2 = possibleNeighbourPosition.getY();
         return Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2) < Math.pow(boidsSettings.getNeighbourRadius(), 2);
     }
 }
