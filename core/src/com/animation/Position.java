@@ -31,8 +31,8 @@ class Position {
         List<Position> neighboursPosition = neighbours.stream()
                 .map(Bird::getPosition)
                 .collect(Collectors.toList());
-        tmpDX = (int) currentMotion.getDx();
-        tmpDY = (int) currentMotion.getDy();
+        tmpDX =  currentMotion.getDx();
+        tmpDY =  currentMotion.getDy();
 
         goTowardsCenterOfMass(neighboursPosition);
         doNotCollide(neighboursPosition.stream().filter(this::isTooClose).collect(Collectors.toList()));
