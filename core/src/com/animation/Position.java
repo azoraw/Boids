@@ -35,7 +35,7 @@ class Position {
         tmpDY = (int) currentMotion.getDy();
 
         goTowardsCenterOfMass(neighboursPosition);
-        doNotCollide(neighboursPosition);
+        doNotCollide(neighboursPosition.stream().filter(this::isTooClose).collect(Collectors.toList()));
         alignWithOthers(neighboursPosition.stream()
                 .map(Position::getCurrentMotion)
                 .collect(Collectors.toList()));
@@ -94,8 +94,8 @@ class Position {
     }
 
     private void doNotCollide(List<Position> positions) {
-        double collisionDX =0;
-        double collisionDY =0;
+        double collisionDX = 0;
+        double collisionDY = 0;
         for (Position position : positions) {
             if (Math.abs(position.getX() - x) < boidsSettings.getCollidingRadius()) {
                 if (position.getX() - x > 0)
@@ -146,5 +146,13 @@ class Position {
         if (y + margin > Gdx.graphics.getHeight()) {
             y--;
         }
+    }
+
+    public boolean isTooClose(Position possibleNeighbourPosition) {
+        double x1 = x;
+        double x2 = possibleNeighbourPosition.getX();
+        double y1 = y;
+        double y2 = possibleNeighbourPosition.getY();
+        return Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2) < Math.pow(boidsSettings.getCollidingRadius(), 2);
     }
 }

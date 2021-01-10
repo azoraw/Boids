@@ -27,10 +27,26 @@ public class Motion {
     }
 
     private void limitSpeed() {
-        double z = Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2));
+        double z = Math.sqrt(dx * dx + dy * dy);
+        maxSpeedLimit(z);
+        minSpeedLimit(z);
+    }
+
+    private void maxSpeedLimit(double z) {
         if (z > boidsSettings.getMaxSpeed()) {
-            dx =  (dx * boidsSettings.getMaxSpeed() / z);
-            dy =  (dy * boidsSettings.getMaxSpeed() / z);
+            dx = dx * boidsSettings.getMaxSpeed() / z;
+            dy = dy * boidsSettings.getMaxSpeed() / z;
+        }
+    }
+
+    private void minSpeedLimit(double z) {
+        if (z < boidsSettings.getMinSpeed()) {
+            if(z == 0 ) {
+                randomDirection();
+                return;
+            }
+            dx = boidsSettings.getMinSpeed() * dx / z;
+            dy = boidsSettings.getMinSpeed() * dy / z;
         }
     }
 

@@ -20,8 +20,8 @@ public class SettingsTable extends Table {
         TextField numberOfBoidsTextField = new TextField(String.valueOf(boidsSettings.getNumberOfBoids()), skin);
         Label maxSpeedLabel = new Label("max speed: ", skin);
         TextField maxSpeedTextField = new TextField(String.valueOf(boidsSettings.getMaxSpeed()), skin);
-        Label initSpeedLabel = new Label("init speed: ", skin);
-        TextField initSpeedTextField = new TextField(String.valueOf(boidsSettings.getMinSpeed()), skin);
+        Label minSpeedLabel = new Label("min speed: ", skin);
+        TextField minSpeedTextField = new TextField(String.valueOf(boidsSettings.getMinSpeed()), skin);
         Label alignmentForceLabel = new Label("alignment force: ", skin);
         TextField alignmentForceTextField = new TextField(String.valueOf(boidsSettings.getAlignmentForce()), skin);
         Label cohesionForceLabel = new Label("cohesion force: ", skin);
@@ -45,8 +45,8 @@ public class SettingsTable extends Table {
             return false;
         });
 
-        initSpeedTextField.addListener(event -> {
-            boidsSettings.setMinSpeed(initSpeedTextField.getText());
+        minSpeedTextField.addListener(event -> {
+            boidsSettings.setMinSpeed(minSpeedTextField.getText());
             return false;
         });
 
@@ -88,8 +88,8 @@ public class SettingsTable extends Table {
         this.add(maxSpeedLabel);
         this.add(maxSpeedTextField);
         this.row();
-        this.add(initSpeedLabel);
-        this.add(initSpeedTextField);
+        this.add(minSpeedLabel);
+        this.add(minSpeedTextField);
         this.row();
         this.add(alignmentForceLabel);
         this.add(alignmentForceTextField);
