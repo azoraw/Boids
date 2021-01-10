@@ -48,54 +48,71 @@ class Position {
     }
 
     private void alignWithOthers(List<Motion> neighboursDirections) {
+        double alignDx = 0;
+        double alignDy = 0;
         for (Motion neighbourDirection : neighboursDirections) {
             if (neighbourDirection.getDx() > currentMotion.getDx()) {
-                tmpDX += boidsSettings.getAlignmentForce();
+                alignDx += boidsSettings.getAlignmentForce();
             }
             if (neighbourDirection.getDx() < currentMotion.getDx()) {
-                tmpDX -= boidsSettings.getAlignmentForce();
+                alignDx -= boidsSettings.getAlignmentForce();
             }
             if (neighbourDirection.getDy() > currentMotion.getDy()) {
-                tmpDY += boidsSettings.getAlignmentForce();
+                alignDy += boidsSettings.getAlignmentForce();
             }
             if (neighbourDirection.getDy() < currentMotion.getDy()) {
-                tmpDY -= boidsSettings.getAlignmentForce();
+                alignDy -= boidsSettings.getAlignmentForce();
             }
         }
-
+        if (neighboursDirections.size() != 0) {
+            tmpDX += alignDx / neighboursDirections.size();
+            tmpDY += alignDy / neighboursDirections.size();
+        }
     }
 
     private void goTowardsCenterOfMass(List<Position> positions) {
+        double cohesionDX = 0;
+        double cohesionDY = 0;
         for (Position position : positions) {
             if (position.getX() - x > 0) {
-                tmpDX += boidsSettings.getCohesionForce();
+                cohesionDX += boidsSettings.getCohesionForce();
             }
             if (position.getX() - x < 0) {
-                tmpDX -= boidsSettings.getCohesionForce();
+                cohesionDX -= boidsSettings.getCohesionForce();
             }
             if (position.getY() - y > 0) {
-                tmpDY += boidsSettings.getCohesionForce();
+                cohesionDY += boidsSettings.getCohesionForce();
             }
             if (position.getY() - y < 0) {
-                tmpDY -= boidsSettings.getCohesionForce();
+                cohesionDY -= boidsSettings.getCohesionForce();
             }
+        }
+        if (positions.size() != 0) {
+            tmpDX += cohesionDX / positions.size();
+            tmpDY += cohesionDY / positions.size();
         }
     }
 
     private void doNotCollide(List<Position> positions) {
+        double collisionDX =0;
+        double collisionDY =0;
         for (Position position : positions) {
             if (Math.abs(position.getX() - x) < boidsSettings.getCollidingRadius()) {
                 if (position.getX() - x > 0)
-                    tmpDX -= boidsSettings.getCollisionRepulsionForce();
+                    collisionDX -= boidsSettings.getCollisionRepulsionForce();
                 if (position.getX() - x < 0)
-                    tmpDX += boidsSettings.getCollisionRepulsionForce();
+                    collisionDX += boidsSettings.getCollisionRepulsionForce();
             }
             if (Math.abs(position.getY() - y) < boidsSettings.getCollidingRadius()) {
                 if (position.getY() - y > 0)
-                    tmpDY -= boidsSettings.getCollisionRepulsionForce();
+                    collisionDY -= boidsSettings.getCollisionRepulsionForce();
                 if (position.getY() - y < 0)
-                    tmpDY += boidsSettings.getCollisionRepulsionForce();
+                    collisionDY += boidsSettings.getCollisionRepulsionForce();
             }
+        }
+        if (positions.size() != 0) {
+            tmpDX += collisionDX / positions.size();
+            tmpDY += collisionDY / positions.size();
         }
     }
 

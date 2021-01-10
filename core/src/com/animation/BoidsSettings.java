@@ -8,7 +8,7 @@ public class BoidsSettings {
     private int numberOfBoids = 100;
 
     private int maxSpeed = 10;
-    private int initSpeed = 10;
+    private int minSpeed = 10;
 
     private double alignmentForce = 1;
     private double cohesionForce = 1;
@@ -34,9 +34,9 @@ public class BoidsSettings {
         }
     }
 
-    public void setInitSpeed(String initSpeedString) {
+    public void setMinSpeed(String initSpeedString) {
         try {
-            initSpeed = Integer.parseInt(initSpeedString);
+            minSpeed = Integer.parseInt(initSpeedString);
         } catch (NumberFormatException ignored) {
         }
     }

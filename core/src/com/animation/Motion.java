@@ -16,8 +16,8 @@ public class Motion {
     }
 
     private void randomDirection() {
-        dx = RandomGen.getRandom(2 * boidsSettings.getInitSpeed() + 1) - boidsSettings.getInitSpeed();
-        dy = Math.sqrt(Math.pow(boidsSettings.getInitSpeed(), 2) - Math.pow(dx, 2)) * (RandomGen.nextBoolean() ? 1 : -1);
+        dx = RandomGen.getRandom(2 * boidsSettings.getMinSpeed() + 1) - boidsSettings.getMinSpeed();
+        dy = Math.sqrt(Math.pow(boidsSettings.getMinSpeed(), 2) - Math.pow(dx, 2)) * (RandomGen.nextBoolean() ? 1 : -1);
     }
 
     void setNewMotion(double newDX, double newDY) {
@@ -29,8 +29,8 @@ public class Motion {
     private void limitSpeed() {
         double z = Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2));
         if (z > boidsSettings.getMaxSpeed()) {
-            dx = (int) (dx * boidsSettings.getMaxSpeed() / z);
-            dy = (int) (dy * boidsSettings.getMaxSpeed() / z);
+            dx =  (dx * boidsSettings.getMaxSpeed() / z);
+            dy =  (dy * boidsSettings.getMaxSpeed() / z);
         }
     }
 
