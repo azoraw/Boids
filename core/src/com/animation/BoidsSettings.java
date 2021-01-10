@@ -5,16 +5,16 @@ import lombok.Getter;
 @Getter
 public class BoidsSettings {
 
-    private int numberOfBoids = 100;
+    private int numberOfBoids = 500;
 
     private int maxSpeed = 10;
     private int minSpeed = 5;
 
-    private double alignmentForce = 0;
-    private double cohesionForce = 0;
+    private double alignmentForce = 1;
+    private double cohesionForce = 1;
 
-    private double collisionRepulsionForce = 0;
-    private int collidingRadius = 50;
+    private double collisionRepulsionForce = 3;
+    private int collidingRadius = 20;
 
     private int neighbourRadius = 100;
 
