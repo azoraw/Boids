@@ -49,5 +49,4 @@ public class Motion {
             dy = boidsSettings.getMinSpeed() * dy / z;
         }
     }
-
 }

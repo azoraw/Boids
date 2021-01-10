@@ -18,10 +18,8 @@ class Position {
     private double tmpDX;
     private double tmpDY;
 
-
     public Position(BoidsSettings boidsSettings) {
         this.boidsSettings = boidsSettings;
-
         x = RandomGen.getRandom(Gdx.graphics.getWidth());
         y = RandomGen.getRandom(Gdx.graphics.getHeight());
         currentMotion = new Motion(boidsSettings);
@@ -31,15 +29,14 @@ class Position {
         List<Position> neighboursPosition = neighbours.stream()
                 .map(Bird::getPosition)
                 .collect(Collectors.toList());
-        tmpDX =  currentMotion.getDx();
-        tmpDY =  currentMotion.getDy();
+        tmpDX = currentMotion.getDx();
+        tmpDY = currentMotion.getDy();
 
         goTowardsCenterOfMass(neighboursPosition);
         doNotCollide(neighboursPosition.stream().filter(this::isTooClose).collect(Collectors.toList()));
         alignWithOthers(neighboursPosition.stream()
                 .map(Position::getCurrentMotion)
                 .collect(Collectors.toList()));
-
         teleportToOtherSide();
 
         currentMotion.setNewMotion(tmpDX, tmpDY);
@@ -97,18 +94,15 @@ class Position {
         double collisionDX = 0;
         double collisionDY = 0;
         for (Position position : positions) {
-            if (Math.abs(position.getX() - x) < boidsSettings.getCollidingRadius()) {
-                if (position.getX() - x > 0)
-                    collisionDX -= boidsSettings.getCollisionRepulsionForce();
-                if (position.getX() - x < 0)
-                    collisionDX += boidsSettings.getCollisionRepulsionForce();
-            }
-            if (Math.abs(position.getY() - y) < boidsSettings.getCollidingRadius()) {
-                if (position.getY() - y > 0)
-                    collisionDY -= boidsSettings.getCollisionRepulsionForce();
-                if (position.getY() - y < 0)
-                    collisionDY += boidsSettings.getCollisionRepulsionForce();
-            }
+            if (position.getX() - x > 0)
+                collisionDX -= boidsSettings.getCollisionRepulsionForce();
+            if (position.getX() - x < 0)
+                collisionDX += boidsSettings.getCollisionRepulsionForce();
+            if (position.getY() - y > 0)
+                collisionDY -= boidsSettings.getCollisionRepulsionForce();
+            if (position.getY() - y < 0)
+                collisionDY += boidsSettings.getCollisionRepulsionForce();
+
         }
         if (positions.size() != 0) {
             tmpDX += collisionDX / positions.size();
@@ -131,28 +125,9 @@ class Position {
         }
     }
 
-    private void goAwayFromEdges() {
-        int margin = 50;
-
-        if (x < margin) {
-            x++;
-        }
-        if (y < margin) {
-            y++;
-        }
-        if (x + margin > Gdx.graphics.getWidth()) {
-            x--;
-        }
-        if (y + margin > Gdx.graphics.getHeight()) {
-            y--;
-        }
-    }
-
     public boolean isTooClose(Position possibleNeighbourPosition) {
-        double x1 = x;
         double x2 = possibleNeighbourPosition.getX();
-        double y1 = y;
         double y2 = possibleNeighbourPosition.getY();
-        return Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2) < Math.pow(boidsSettings.getCollidingRadius(), 2);
+        return Math.pow(x - x2, 2) + Math.pow(y - y2, 2) < Math.pow(boidsSettings.getCollidingRadius(), 2);
     }
 }
