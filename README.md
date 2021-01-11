@@ -21,3 +21,5 @@ Execute in command line:
 * Java 8
 * Libgdx
 * Lombok
+
+![boids showcase](https://user-images.githubusercontent.com/26636050/104228268-e3bc1780-544a-11eb-9dd7-039ab752204a.png)
